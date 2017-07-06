@@ -42,6 +42,7 @@ RUN set -x \
         wget -q -O - http://www.apache.org/dyn/closer.cgi/hbase/ \
         | sed -n 's#.*href="\(http://ftp.[^"]*\)".*#\1#p' \
         | head -n 1 \
+        | sed 's:/*$::' \
     ) \   
     && wget -q -O - ${mirror_url}/${HBASE_VERSION}/hbase-${HBASE_VERSION}-bin.tar.gz \
         | tar -xzf - -C /usr/local \
