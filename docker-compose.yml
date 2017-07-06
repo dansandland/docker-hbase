@@ -51,11 +51,12 @@ services:
     container_name: hmaster-1
     networks: ["vnet"]
     hostname: hmaster-1.vnet
-    image: smizy/hbase:1.2.6-alpine
+    image: dansandland/hbase:1.2.6-alpine
     expose: [16000]
     ports:  [16010]
     depends_on: ["zookeeper-1"]
     environment:
+      - HBASE_CREATE_NAMESPACE=my_ns_1,my_ns_2
       - SERVICE_16000_NAME=hmaster
       - SERVICE_16010_IGNORE=true
       - HBASE_ZOOKEEPER_QUORUM=zookeeper-1.vnet:2181 
@@ -68,7 +69,7 @@ services:
     container_name: regionserver-1
     networks: ["vnet"]
     hostname: regionserver-1.vnet
-    image: smizy/hbase:1.2.6-alpine
+    image: dansandland/hbase:1.2.6-alpine
     expose: [16020, 16030]
     depends_on: ["zookeeper-1"]
     environment:

@@ -7,12 +7,12 @@ services:
     container_name: hmaster-${i}
     networks: ["${network_name}"]
     hostname: hmaster-${i}.${network_name}
-    image: smizy/hbase:1.2.6-alpine
+    image: dansandland/hbase:1.2.6-alpine
     expose: [16000]
     ports:  [16010]
     depends_on: ["zookeeper-1"]
     environment:
-      - HBASE_CREATE_NAMESPACE="my_ns_1,my_ns_2"
+      - HBASE_CREATE_NAMESPACE=my_ns_1,my_ns_2
       - SERVICE_16000_NAME=hmaster
       - SERVICE_16010_IGNORE=true
       - HBASE_ZOOKEEPER_QUORUM=${ZOOKEEPER_QUORUM}
@@ -27,7 +27,7 @@ services:
     container_name: regionserver-${i}
     networks: ["${network_name}"]
     hostname: regionserver-${i}.${network_name}
-    image: smizy/hbase:1.2.6-alpine
+    image: dansandland/hbase:1.2.6-alpine
     expose: [16020, 16030]
     depends_on: ["zookeeper-1"]
     environment:
@@ -43,7 +43,7 @@ services:
     container_name: hbasethrift-${i}
     networks: ["${network_name}"]
     hostname: hbasethift-${i}.${network_name}
-    image: smizy/hbase:1.2.6-alpine
+    image: dansandland/hbase:1.2.6-alpine
     ports: [9090]
     depends_on: ["regionserver-1"]
     environment:
