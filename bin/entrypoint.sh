@@ -64,6 +64,15 @@ if [ "$1" == "hmaster-1" ]; then
         
     exec su-exec hbase hbase master "$@" start
 
+    if [[ -n $HBASE_CREATE_NAMESPACE ]]; then
+        wait_until ${HBASE_HMASTER1_HOSTNAME} 16000
+        hbase_cmd=""
+        IFS=','; for namespaceToCreate in $HBASE_CREATE_NAMESPACE; do
+            hbase_cmd="${hbase_cmd}create_namespace '$namespaceToCreate'; "
+        done
+        echo "$hbase_cmd" | hbase shell -n
+    fi
+
 elif [ "$1" == "regionserver" ]; then
     shift
     

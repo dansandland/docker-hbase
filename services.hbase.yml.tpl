@@ -12,9 +12,10 @@ services:
     ports:  [16010]
     depends_on: ["zookeeper-1"]
     environment:
+      - HBASE_CREATE_NAMESPACE="my_ns_1,my_ns_2"
       - SERVICE_16000_NAME=hmaster
       - SERVICE_16010_IGNORE=true
-      - HBASE_ZOOKEEPER_QUORUM=${ZOOKEEPER_QUORUM} 
+      - HBASE_ZOOKEEPER_QUORUM=${ZOOKEEPER_QUORUM}
       ${SWARM_FILTER_HMASTER_${i}}
     volumes_from:
       - namenode-${i}
